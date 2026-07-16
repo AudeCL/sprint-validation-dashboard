@@ -161,6 +161,40 @@
         .kpi-card.warning { border-left-color: #ffc107; }
         .kpi-card.danger { border-left-color: var(--rc-dark-red); }
 
+        /* 100% completed validation tile */
+        .kpi-card.complete {
+            position: relative;
+            overflow: hidden;
+            border-left-color: #28a745;
+        }
+        .kpi-card.complete::after {
+            content: '🎉';
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            font-size: 1.3em;
+            animation: complete-badge-pop 0.6s ease-out;
+        }
+        @keyframes complete-badge-pop {
+            0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        /* Confetti */
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: 0;
+            will-change: transform, opacity;
+            pointer-events: none;
+            z-index: 5;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+        }
+
         .kpi-label {
             font-size: 0.85em;
             color: #6c757d;
@@ -814,6 +848,9 @@
         // Render KPI Cards
         const readinessClass = readinessPercentage >= 80 ? 'excellent' : readinessPercentage >= 60 ? 'good' : readinessPercentage >= 40 ? 'warning' : 'danger';
 
+        // A validation tile is "complete" when it's expected somewhere and 100% done
+        const isComplete = (progress) => progress !== 'N/A' && parseFloat(progress) >= 100;
+
         let kpiHTML = '';
         kpiHTML += '<div class="kpi-card ' + readinessClass + '">';
         kpiHTML += '<div class="kpi-label">Stories Ready for Build</div>';
@@ -822,28 +859,28 @@
         kpiHTML += '</div>';
 
         const uxClass = uxProgress === 'N/A' ? 'good' : (parseFloat(uxProgress) >= 70 ? 'excellent' : parseFloat(uxProgress) >= 50 ? 'good' : 'warning');
-        kpiHTML += '<div class="kpi-card ' + uxClass + '">';
+        kpiHTML += '<div class="kpi-card ' + uxClass + (isComplete(uxProgress) ? ' complete' : '') + '" data-validation-tile="1">';
         kpiHTML += '<div class="kpi-label">UX Validation Progress</div>';
         kpiHTML += '<div class="kpi-value">' + (uxProgress === 'N/A' ? 'N/A' : uxProgress + '%') + '</div>';
         kpiHTML += '<div class="kpi-subtitle">' + uxCompletedCount + ' of ' + uxExpectedCount + ' completed</div>';
         kpiHTML += '</div>';
 
         const dataClass = dataProgress === 'N/A' ? 'good' : (parseFloat(dataProgress) >= 70 ? 'excellent' : parseFloat(dataProgress) >= 50 ? 'good' : 'warning');
-        kpiHTML += '<div class="kpi-card ' + dataClass + '">';
+        kpiHTML += '<div class="kpi-card ' + dataClass + (isComplete(dataProgress) ? ' complete' : '') + '" data-validation-tile="1">';
         kpiHTML += '<div class="kpi-label">Data Validation Progress</div>';
         kpiHTML += '<div class="kpi-value">' + (dataProgress === 'N/A' ? 'N/A' : dataProgress + '%') + '</div>';
         kpiHTML += '<div class="kpi-subtitle">' + dataCompletedCount + ' of ' + dataExpectedCount + ' completed</div>';
         kpiHTML += '</div>';
 
         const businessClass = businessProgress === 'N/A' ? 'good' : (parseFloat(businessProgress) >= 70 ? 'excellent' : parseFloat(businessProgress) >= 50 ? 'good' : 'warning');
-        kpiHTML += '<div class="kpi-card ' + businessClass + '">';
+        kpiHTML += '<div class="kpi-card ' + businessClass + (isComplete(businessProgress) ? ' complete' : '') + '" data-validation-tile="1">';
         kpiHTML += '<div class="kpi-label">Business Validation Progress</div>';
         kpiHTML += '<div class="kpi-value">' + (businessProgress === 'N/A' ? 'N/A' : businessProgress + '%') + '</div>';
         kpiHTML += '<div class="kpi-subtitle">' + businessCompletedCount + ' of ' + businessExpectedCount + ' completed</div>';
         kpiHTML += '</div>';
 
         const solutionClass = solutionProgress === 'N/A' ? 'good' : (parseFloat(solutionProgress) >= 70 ? 'excellent' : parseFloat(solutionProgress) >= 50 ? 'good' : 'warning');
-        kpiHTML += '<div class="kpi-card ' + solutionClass + '">';
+        kpiHTML += '<div class="kpi-card ' + solutionClass + (isComplete(solutionProgress) ? ' complete' : '') + '" data-validation-tile="1">';
         kpiHTML += '<div class="kpi-label">Solution Validation Progress</div>';
         kpiHTML += '<div class="kpi-value">' + (solutionProgress === 'N/A' ? 'N/A' : solutionProgress + '%') + '</div>';
         kpiHTML += '<div class="kpi-subtitle">' + solutionCompletedCount + ' of ' + solutionExpectedCount + ' completed</div>';
@@ -856,6 +893,41 @@
         kpiHTML += '</div>';
 
         document.getElementById('kpi-grid').innerHTML = kpiHTML;
+
+        // Celebrate any validation tile that reached 100% with a confetti burst
+        function launchConfetti(tile) {
+            const colors = ['#CC0000', '#28a745', '#ffc107', '#0d6efd', '#ffffff', '#990000'];
+            const pieces = 40;
+            for (let i = 0; i < pieces; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                const color = colors[i % colors.length];
+                piece.style.background = color;
+                if (i % 3 === 0) piece.style.borderRadius = '50%';
+                // Start near the top of the tile, spread horizontally
+                const startX = 20 + Math.floor((i / pieces) * 60) + (i % 5) * 3;
+                piece.style.left = startX + '%';
+                piece.style.top = '10px';
+                // Random-ish trajectory driven by CSS custom props
+                const spread = (i % 2 === 0 ? 1 : -1) * (30 + (i * 7) % 90);
+                const drop = 120 + (i * 13) % 120;
+                const rot = ((i * 47) % 720) + 'deg';
+                piece.style.setProperty('--dx', spread + 'px');
+                piece.style.setProperty('--dy', drop + 'px');
+                piece.style.setProperty('--rot', rot);
+                const duration = 1.1 + (i % 6) * 0.15;
+                const delay = (i % 8) * 0.04;
+                piece.style.animation = 'confetti-fall ' + duration + 's ease-in ' + delay + 's forwards';
+                tile.appendChild(piece);
+                // Clean up after the animation completes
+                piece.addEventListener('animationend', () => piece.remove());
+            }
+        }
+
+        document.querySelectorAll('.kpi-card.complete').forEach((tile, idx) => {
+            // Stagger multiple simultaneous bursts slightly
+            setTimeout(() => launchConfetti(tile), 250 + idx * 200);
+        });
 
         // Render Alert Box
         const storiesNeedingAttention = processedStories.filter(s => s.readiness === "Not Ready");
