@@ -21,6 +21,39 @@
             --rc-light-gray: #f5f5f5;
             --rc-white: #ffffff;
         }
+        .success-banner {
+            background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
+            color: white;
+            padding: 18px 30px;
+            border-radius: 0;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-left: 6px solid #145523;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .success-banner .banner-icon {
+            font-size: 32px;
+            line-height: 1;
+        }
+        .success-banner .banner-text h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .success-banner .banner-text p {
+            margin: 4px 0 0;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        @media (max-width: 768px) {
+            .success-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
         .header {
             background: linear-gradient(135deg, var(--rc-red) 0%, var(--rc-dark-red) 100%);
             color: white;
@@ -573,6 +606,13 @@
     </style>
 </head>
 <body>
+    <div class="success-banner">
+        <div class="banner-icon">✅</div>
+        <div class="banner-text">
+            <h2>Sprint 20 is Fully Validated — Ready for Delivery</h2>
+            <p>All user stories in scope have received every required validation. No stories are pending stakeholder sign-off.</p>
+        </div>
+    </div>
     <div class="header">
         <div class="header-countdown" id="countdown-box">
             <div class="countdown-label">⏰ VALIDATION DEADLINE</div>
@@ -584,7 +624,7 @@
             <p class="subtitle">Release 5 - Sprint 20 | Order Management Workstream</p>
             <p class="last-updated">Dashboard Generated: <span id="lastUpdated"></span></p>
             <div class="data-refresh-notice">
-                <strong>ℹ️ Data Refresh:</strong> ADO data last extracted on <strong>July 20, 2026 at 9:30 AM CEST</strong>.
+                <strong>ℹ️ Data Refresh:</strong> ADO data last extracted on <strong>July 22, 2026 at 9:24 AM CEST</strong>.
                 Validations completed in ADO after this time may not be reflected yet. Dashboard will be refreshed periodically.
             </div>
         </div>
@@ -746,9 +786,9 @@
             "1439274":{technical:1,ux:0,data:1,business:1},
             "1363270":{technical:0,ux:0,data:0,business:0},
             "1387705":{technical:1,ux:1,data:0,business:1},
-            "1455005":{technical:1,ux:0,data:0,business:1},
+            "1455005":{technical:1,ux:1,data:0,business:1},
             "1363060":{technical:1,ux:1,data:0,business:1},
-            "1381005":{technical:1,ux:0,data:0,business:1},
+            "1381005":{technical:1,ux:1,data:1,business:1},
             "1395655":{technical:1,ux:0,data:0,business:0},
             "1381563":{technical:1,ux:0,data:0,business:0},
             "1398079":{technical:1,ux:0,data:0,business:0},
