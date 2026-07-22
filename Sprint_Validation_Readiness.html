@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sprint 21 Validation Readiness Dashboard</title>
+    <title>Sprint 20 Validation Readiness Dashboard</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: #fafafa;
-            color: var(--rc-black);
-            padding: 32px 16px;
-            max-width: 1800px;
-            margin: 0 auto;
+            background: #f5f5f5;
+            padding: 20px;
         }
 
         /* Royal Canin Brand Colors */
@@ -23,127 +20,117 @@
             --rc-gray: #666666;
             --rc-light-gray: #f5f5f5;
             --rc-white: #ffffff;
-            --rc-border: #ececec;
-            --rc-muted: #8a8a8a;
         }
-        .header {
-            background: var(--rc-white);
-            color: var(--rc-black);
-            padding: 28px 32px;
-            border-radius: 14px;
-            margin-bottom: 24px;
-            border: 1px solid var(--rc-border);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            position: relative;
-        }
-        .header-top {
+        .success-banner {
+            background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
+            color: white;
+            padding: 18px 30px;
+            border-radius: 0;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-left: 6px solid #145523;
             display: flex;
             align-items: center;
-            gap: 32px;
+            gap: 16px;
+        }
+        .success-banner .banner-icon {
+            font-size: 32px;
+            line-height: 1;
+        }
+        .success-banner .banner-text h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .success-banner .banner-text p {
+            margin: 4px 0 0;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        @media (max-width: 768px) {
+            .success-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        .header {
+            background: linear-gradient(135deg, var(--rc-red) 0%, var(--rc-dark-red) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 0;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rc-dark-red) 0%, var(--rc-red) 50%, var(--rc-dark-red) 100%);
         }
         .header-countdown {
             flex-shrink: 0;
-            background: linear-gradient(135deg, #fbf3f3 0%, #fdecec 100%);
-            padding: 22px 28px;
-            border-radius: 12px;
-            border: 1px solid #f0dede;
-            border-left: 4px solid var(--rc-red);
-            min-width: 300px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .header-countdown .countdown-icon {
-            font-size: 2.4em;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-        .header-countdown .countdown-body {
-            flex: 1;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            min-width: 200px;
         }
         .header-countdown .countdown-label {
-            font-size: 0.72em;
+            font-size: 0.85em;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 8px;
-            color: var(--rc-red);
-            font-weight: 700;
+            opacity: 0.9;
+            font-weight: 600;
         }
         .header-countdown .countdown-timer {
-            font-size: 2.1em;
+            font-size: 2em;
             font-weight: 700;
-            color: var(--rc-black);
-            line-height: 1.1;
-            font-variant-numeric: tabular-nums;
+            font-family: 'Courier New', monospace;
+            line-height: 1.2;
         }
         .header-countdown .countdown-subtitle {
-            font-size: 0.78em;
-            margin-top: 6px;
-            color: var(--rc-muted);
+            font-size: 0.8em;
+            margin-top: 5px;
+            opacity: 0.85;
         }
         .header-countdown.urgent {
-            background: linear-gradient(135deg, #fdecec 0%, #fbdaddff 100%);
-            border-color: #f5c2c2;
+            background: rgba(220, 53, 69, 0.3);
+            border-color: rgba(220, 53, 69, 0.5);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
         .header-main {
             flex: 1;
         }
-        .header-main h1 { font-size: 1.7em; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
-        .header-main .subtitle { font-size: 0.98em; color: var(--rc-gray); }
-        .header-main .last-updated { margin-top: 12px; font-size: 0.82em; color: var(--rc-muted); }
-
-        .view-switcher {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-        .view-switcher-label {
-            font-size: 0.78em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            color: var(--rc-muted);
-            margin-right: 6px;
-        }
-        .view-button {
-            padding: 7px 16px;
-            background: var(--rc-white);
-            border: 1px solid var(--rc-border);
-            color: var(--rc-gray);
-            border-radius: 8px;
-            cursor: pointer;
+        .header-main h1 { font-size: 2.2em; margin-bottom: 10px; }
+        .header-main .subtitle { font-size: 1.1em; opacity: 0.95; }
+        .header-main .last-updated { margin-top: 10px; font-size: 0.9em; opacity: 0.85; }
+        .header-main .data-refresh-notice {
+            margin-top: 12px;
+            padding: 10px 15px;
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 3px solid #ffc107;
+            border-radius: 4px;
             font-size: 0.85em;
-            font-weight: 600;
-            transition: all 0.15s ease;
         }
-        .view-button:hover {
-            border-color: #d0d0d0;
-            color: var(--rc-black);
-        }
-        .view-button.active {
-            background: var(--rc-red);
-            color: white;
-            border-color: var(--rc-red);
-        }
-        .data-refresh-notice {
-            padding: 10px 14px;
-            background: #fbfbfb;
-            border: 1px solid var(--rc-border);
-            border-left: 3px solid #e0b400;
-            border-radius: 8px;
-            font-size: 0.82em;
-            color: var(--rc-gray);
-        }
-        .data-refresh-notice strong {
-            color: var(--rc-black);
+        .header-main .data-refresh-notice strong {
+            color: #ffc107;
         }
 
         @media (max-width: 768px) {
-            .header-top {
+            .header {
                 flex-direction: column;
                 align-items: stretch;
             }
@@ -153,30 +140,32 @@
         }
 
         .tabs {
-            background: transparent;
-            margin-bottom: 24px;
+            background: white;
+            border-radius: 0;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             display: flex;
-            gap: 6px;
-            border-bottom: 1px solid var(--rc-border);
         }
         .tab-button {
-            padding: 12px 22px;
+            flex: 1;
+            padding: 18px 30px;
             background: transparent;
             border: none;
-            border-bottom: 2px solid transparent;
+            border-bottom: 3px solid transparent;
             cursor: pointer;
-            font-size: 0.92em;
+            font-size: 1.05em;
             font-weight: 600;
-            color: var(--rc-muted);
-            transition: all 0.15s ease;
-            margin-bottom: -1px;
+            color: var(--rc-gray);
+            transition: all 0.3s ease;
         }
         .tab-button:hover {
+            background: var(--rc-light-gray);
             color: var(--rc-black);
         }
         .tab-button.active {
             color: var(--rc-red);
             border-bottom-color: var(--rc-red);
+            background: var(--rc-light-gray);
         }
 
         .tab-content { display: none; }
@@ -190,65 +179,73 @@
         }
         .kpi-card {
             background: white;
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid var(--rc-border);
-            border-top: 3px solid var(--rc-red);
-            transition: border-color 0.15s ease;
+            padding: 28px;
+            border-radius: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--rc-red);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .kpi-card:hover {
-            border-color: #dcdcdc;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .kpi-card.excellent { border-top-color: #2e9e57; }
-        .kpi-card.good { border-top-color: var(--rc-red); }
-        .kpi-card.warning { border-top-color: #e0b400; }
-        .kpi-card.danger { border-top-color: var(--rc-dark-red); }
+        .kpi-card.excellent { border-left-color: #28a745; }
+        .kpi-card.good { border-left-color: var(--rc-red); }
+        .kpi-card.warning { border-left-color: #ffc107; }
+        .kpi-card.danger { border-left-color: var(--rc-dark-red); }
+
+        /* 100% completed validation tile */
+        .kpi-card.complete {
+            position: relative;
+            overflow: hidden;
+            border-left-color: #28a745;
+        }
+        .kpi-card.complete::after {
+            content: '🎉';
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            font-size: 1.3em;
+            animation: complete-badge-pop 0.6s ease-out;
+        }
+        @keyframes complete-badge-pop {
+            0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+            70% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        /* Confetti */
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: 0;
+            will-change: transform, opacity;
+            pointer-events: none;
+            z-index: 5;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+        }
 
         .kpi-label {
-            font-size: 0.78em;
-            color: var(--rc-muted);
+            font-size: 0.85em;
+            color: #6c757d;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 10px;
             font-weight: 600;
         }
         .kpi-value {
-            font-size: 2.6em;
+            font-size: 3em;
             font-weight: 700;
             color: var(--rc-black);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             line-height: 1;
         }
         .kpi-subtitle {
-            font-size: 0.9em;
-            color: var(--rc-gray);
-        }
-
-        .health-tile {
-            cursor: pointer;
-        }
-        .health-tile:hover {
-            border-color: #c9c9c9;
-        }
-        .health-tile.selected {
-            border-color: var(--rc-red);
-            background: #fffafa;
-        }
-        .health-tile .drill-hint {
-            color: var(--rc-red);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        .health-drill {
-            margin-top: 24px;
-            border-top: 1px solid var(--rc-border);
-            padding-top: 20px;
-        }
-        .health-drill h3 {
-            font-size: 1em;
-            font-weight: 700;
-            color: var(--rc-black);
-            margin-bottom: 4px;
+            font-size: 0.95em;
+            color: #495057;
         }
 
         .alert-box {
@@ -293,109 +290,31 @@
 
         .section {
             background: white;
-            padding: 26px;
-            border-radius: 12px;
-            border: 1px solid var(--rc-border);
-            margin-bottom: 24px;
+            padding: 30px;
+            border-radius: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
         }
         .section h2 {
-            font-size: 1.15em;
-            font-weight: 700;
+            font-size: 1.5em;
             color: var(--rc-black);
-            margin-bottom: 16px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--rc-border);
-        }
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 16px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--rc-border);
-        }
-        .legend-toggle {
-            flex-shrink: 0;
-            padding: 7px 14px;
-            background: white;
-            border: 1px solid var(--rc-border);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.82em;
-            font-weight: 600;
-            color: var(--rc-gray);
-            transition: all 0.15s ease;
-        }
-        .legend-toggle:hover {
-            border-color: #d0d0d0;
-            color: var(--rc-black);
-        }
-        .legend-toggle .legend-caret {
-            display: inline-block;
-            transition: transform 0.2s ease;
-            font-size: 0.9em;
-        }
-        .legend-toggle[aria-expanded="true"] .legend-caret {
-            transform: rotate(90deg);
-        }
-        .legend-panel {
-            display: none;
-            background: #fbfbfb;
-            border: 1px solid var(--rc-border);
-            border-radius: 10px;
-            padding: 20px 22px;
             margin-bottom: 20px;
-        }
-        .legend-panel.expanded {
-            display: block;
-        }
-        .legend-panel h4 {
-            font-size: 1em;
-            color: var(--rc-black);
-            margin-bottom: 10px;
-        }
-        .legend-panel p {
-            font-size: 0.88em;
-            color: var(--rc-gray);
-            margin-bottom: 16px;
-            line-height: 1.5;
-        }
-        .legend-item-row {
-            display: flex;
-            gap: 16px;
-            padding: 10px 0;
-            border-top: 1px solid var(--rc-border);
-        }
-        .legend-item-row .legend-status {
-            flex-shrink: 0;
-            width: 160px;
-            font-weight: 600;
-            color: var(--rc-black);
-            font-size: 0.9em;
-        }
-        .legend-item-row .legend-desc {
-            font-size: 0.85em;
-            color: var(--rc-gray);
-            line-height: 1.5;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--rc-red);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 16px;
-            font-size: 0.88em;
+            margin-top: 20px;
+            font-size: 0.9em;
         }
         th {
-            background: #f7f7f7;
-            color: var(--rc-gray);
-            padding: 11px 12px;
+            background: var(--rc-red);
+            color: white;
+            padding: 12px 10px;
             text-align: left;
             font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.82em;
-            letter-spacing: 0.4px;
-            border-bottom: 1px solid var(--rc-border);
             position: sticky;
             top: 0;
         }
@@ -406,8 +325,7 @@
             padding-right: 30px;
         }
         th.sortable:hover {
-            background: #efefef;
-            color: var(--rc-black);
+            background: var(--rc-dark-red);
         }
         th.sortable::after {
             content: '⇅';
@@ -425,18 +343,19 @@
             opacity: 1;
         }
 
-        /* Center the validation status columns (UX, Data, Business, Solution, Overall)
-           — always the last five columns of the heatmap, detailed & change-request tables */
-        #heatmap-table th:nth-last-child(-n+5),
-        #heatmap-table td:nth-last-child(-n+5),
-        #detailed-table th:nth-last-child(-n+5),
-        #detailed-table td:nth-last-child(-n+5),
-        #change-requests-table th:nth-last-child(-n+5),
-        #change-requests-table td:nth-last-child(-n+5) {
+        /* Equal width for validation status columns */
+        #detailed-table th:nth-child(4),
+        #detailed-table th:nth-child(5),
+        #detailed-table th:nth-child(6),
+        #detailed-table th:nth-child(7) {
+            width: 12%;
             text-align: center;
         }
-        #detailed-table th:nth-last-child(-n+5) {
-            width: 12%;
+        #detailed-table td:nth-child(4),
+        #detailed-table td:nth-child(5),
+        #detailed-table td:nth-child(6),
+        #detailed-table td:nth-child(7) {
+            text-align: center;
         }
         td {
             padding: 10px;
@@ -472,15 +391,15 @@
         }
 
         .status-completed {
-            color: #1e7e40;
+            color: #28a745;
             font-weight: 600;
         }
         .status-pending {
-            color: #b58a00;
+            color: #ffc107;
             font-weight: 600;
         }
         .status-na {
-            color: var(--rc-muted);
+            color: #6c757d;
         }
         .status-offline {
             color: #17a2b8;
@@ -488,20 +407,20 @@
         }
 
         .readiness-ready {
-            background: #eaf6ee;
-            color: #1e7e40;
-            padding: 5px 12px;
-            border-radius: 20px;
+            background: #28a745;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 0.82em;
+            font-size: 0.85em;
         }
         .readiness-not-ready {
-            background: #fdeaea;
-            color: #c22b2b;
-            padding: 5px 12px;
-            border-radius: 20px;
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 0.82em;
+            font-size: 0.85em;
         }
 
         .chart-grid {
@@ -512,14 +431,13 @@
         }
         .chart-box {
             background: white;
-            padding: 18px 22px;
-            border-radius: 12px;
-            border: 1px solid var(--rc-border);
+            padding: 25px;
+            border-radius: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 3px solid var(--rc-red);
         }
         .chart-box h3 {
-            margin-bottom: 14px;
-            font-size: 0.95em;
-            font-weight: 700;
+            margin-bottom: 20px;
             color: var(--rc-black);
         }
 
@@ -534,28 +452,28 @@
             color: #495057;
         }
         .progress-bar {
-            height: 24px;
-            background: #f0f0f0;
-            border-radius: 12px;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
             overflow: hidden;
             position: relative;
         }
         .progress-fill {
             height: 100%;
-            background: #2e9e57;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 0.8em;
+            font-size: 0.85em;
             transition: width 1s ease;
         }
         .progress-fill.low {
-            background: var(--rc-red);
+            background: linear-gradient(90deg, var(--rc-dark-red) 0%, var(--rc-red) 100%);
         }
         .progress-fill.medium {
-            background: #e0b400;
+            background: linear-gradient(90deg, #ffc107 0%, #fd7e14 100%);
         }
 
         .donut-chart {
@@ -584,48 +502,42 @@
         }
 
         .filters {
-            background: transparent;
-            padding: 0;
-            margin-bottom: 18px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
         .filter-row {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
             align-items: center;
         }
         .filter-row input, .filter-row select {
-            padding: 9px 12px;
-            border: 1px solid var(--rc-border);
-            border-radius: 8px;
-            font-size: 0.9em;
-            background: white;
-        }
-        .filter-row input:focus, .filter-row select:focus {
-            outline: none;
-            border-color: var(--rc-red);
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.95em;
         }
         .filter-row button {
-            padding: 9px 18px;
-            background: white;
-            color: var(--rc-gray);
-            border: 1px solid var(--rc-border);
-            border-radius: 8px;
+            padding: 10px 20px;
+            background: var(--rc-red);
+            color: white;
+            border: none;
+            border-radius: 0;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.15s ease;
+            transition: background 0.3s ease;
         }
         .filter-row button:hover {
-            border-color: #d0d0d0;
-            color: var(--rc-black);
+            background: var(--rc-dark-red);
         }
 
         .footer {
-            background: transparent;
-            color: var(--rc-muted);
-            padding: 24px 4px;
-            margin-top: 32px;
-            border-top: 1px solid var(--rc-border);
+            background: var(--rc-black);
+            color: white;
+            padding: 30px;
+            margin-top: 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -636,14 +548,14 @@
             flex: 1;
         }
         .footer-left h4 {
-            font-size: 0.95em;
-            margin-bottom: 6px;
-            color: var(--rc-black);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: white;
         }
         .footer-left p {
-            font-size: 0.82em;
-            color: var(--rc-muted);
-            margin: 3px 0;
+            font-size: 0.9em;
+            color: #cccccc;
+            margin: 5px 0;
         }
         .footer-right {
             text-align: right;
@@ -670,10 +582,10 @@
         .footer-bottom {
             width: 100%;
             text-align: center;
-            font-size: 0.8em;
-            color: var(--rc-muted);
-            padding-top: 14px;
-            border-top: 1px solid var(--rc-border);
+            font-size: 0.85em;
+            color: #999;
+            padding-top: 15px;
+            border-top: 1px solid #333;
         }
 
         @media (max-width: 768px) {
@@ -694,81 +606,53 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-top">
-            <div class="header-main">
-                <h1>🎯 Sprint Validation Readiness Dashboard</h1>
-                <p class="subtitle">Release 5 - Sprint 21 | Order Management &amp; eB2B Workstreams</p>
-                <div class="view-switcher">
-                    <span class="view-switcher-label">Workstream view:</span>
-                    <button class="view-button active" id="view-ALL" onclick="switchView('ALL')">OM + eB2B</button>
-                    <button class="view-button" id="view-OM" onclick="switchView('OM')">OM only</button>
-                    <button class="view-button" id="view-eB2B" onclick="switchView('eB2B')">eB2B only</button>
-                </div>
-                <p class="last-updated">Dashboard Generated: <span id="lastUpdated"></span></p>
-            </div>
-            <div class="header-countdown" id="countdown-box">
-                <div class="countdown-icon">⏰</div>
-                <div class="countdown-body">
-                    <div class="countdown-label">VALIDATION DEADLINE</div>
-                    <div class="countdown-timer" id="countdown-timer">--:--:--</div>
-                    <div class="countdown-subtitle">July 30, 6:00 PM CEST</div>
-                </div>
-            </div>
+    <div class="success-banner">
+        <div class="banner-icon">✅</div>
+        <div class="banner-text">
+            <h2>Sprint 20 is Fully Validated — Ready for Delivery</h2>
+            <p>All user stories in scope have received every required validation. No stories are pending stakeholder sign-off.</p>
         </div>
-        <div class="data-refresh-notice">
-            <strong>ℹ️ Data Refresh:</strong> ADO data last extracted on <strong>July 22, 2026 at 5:48 PM CEST</strong>.
-            Validations completed in ADO after this time may not be reflected yet. Dashboard will be refreshed periodically.
+    </div>
+    <div class="header">
+        <div class="header-countdown" id="countdown-box">
+            <div class="countdown-label">⏰ VALIDATION DEADLINE</div>
+            <div class="countdown-timer" id="countdown-timer">--:--:--</div>
+            <div class="countdown-subtitle">July 16, 6:00 PM CEST</div>
+        </div>
+        <div class="header-main">
+            <h1>🎯 Sprint Validation Readiness Dashboard</h1>
+            <p class="subtitle">Release 5 - Sprint 20 | Order Management Workstream</p>
+            <p class="last-updated">Dashboard Generated: <span id="lastUpdated"></span></p>
+            <div class="data-refresh-notice">
+                <strong>ℹ️ Data Refresh:</strong> ADO data last extracted on <strong>July 22, 2026 at 9:24 AM CEST</strong>.
+                Validations completed in ADO after this time may not be reflected yet. Dashboard will be refreshed periodically.
+            </div>
         </div>
     </div>
 
     <div class="tabs">
         <button class="tab-button active" onclick="switchTab('overview')">📊 Validation Overview</button>
-        <button class="tab-button" onclick="switchTab('change-requests')">🔁 Change Requests</button>
-        <button class="tab-button" onclick="switchTab('enablers')">🧩 Enablers</button>
         <button class="tab-button" onclick="switchTab('detailed')">📋 Detailed Tracker</button>
-        <button class="tab-button" onclick="switchTab('health')">🩺 Sprint Health Checks</button>
     </div>
 
     <div id="overview" class="tab-content active">
-        <div class="chart-grid" style="grid-template-columns: 2fr 1fr 2fr; margin-bottom: 30px;">
-            <div class="chart-box" style="border-top: none;">
-                <h3>🗂️ Sprint Scope Composition</h3>
-                <div id="scope-composition"></div>
-            </div>
+        <div id="kpi-grid" class="kpi-grid"></div>
+        <div id="alert-section"></div>
 
-            <div class="chart-box" style="border-top: none;">
+        <div class="chart-grid">
+            <div class="chart-box">
                 <h3>📊 Overall Sprint Readiness</h3>
                 <div class="donut-chart" id="readiness-chart"></div>
             </div>
 
-            <div class="chart-box" style="border-top: none;">
+            <div class="chart-box">
                 <h3>📈 Validation Progress by Type</h3>
                 <div id="validation-progress"></div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-header">
-                <h2 style="margin-bottom:0; padding-bottom:0; border-bottom:none;">🔥 Validation Status Heatmap</h2>
-                <button class="legend-toggle" id="legend-toggle" onclick="toggleLegend()" aria-expanded="false">📖 Legend <span class="legend-caret">▸</span></button>
-            </div>
-            <div class="legend-panel" id="legend-panel">
-                <h4>How to read this table</h4>
-                <p>The <strong>Solutioning Status</strong> indicates the maturity of each User Story and whether it is ready for stakeholder review.</p>
-                <div class="legend-item-row">
-                    <span class="legend-status">🔴 In Progress</span>
-                    <span class="legend-desc">The Salesforce team is actively working on the User Story or is awaiting additional inputs before it can be completed. If validation is required, the item is not yet ready for review. Validation will be requested once the solution reaches a more stable state.</span>
-                </div>
-                <div class="legend-item-row">
-                    <span class="legend-status">🟡 Under Finalisation</span>
-                    <span class="legend-desc">The Salesforce team is finalising the User Story. If validation is required, reviewers may already start providing feedback, understanding that minor updates or clarifications may still be introduced before the User Story is finalized.</span>
-                </div>
-                <div class="legend-item-row">
-                    <span class="legend-status">🟢 Finalised</span>
-                    <span class="legend-desc">The Salesforce team has completed the User Story. If validation is required, the item is ready for stakeholder review and approval.</span>
-                </div>
-            </div>
+            <h2>🔥 Validation Status Heatmap</h2>
             <div style="overflow-x: auto;">
                 <table id="heatmap-table"></table>
             </div>
@@ -795,42 +679,13 @@
         </div>
     </div>
 
-    <div id="enablers" class="tab-content">
-        <div class="section">
-            <h2>🧩 Sprint Enablers</h2>
-            <p style="color: var(--rc-gray); margin-bottom: 10px;">Enabler stories managed as part of this sprint. Enablers are not subject to the standard validation cycle and are tracked separately from the Validation Status Heatmap.</p>
-            <div style="overflow-x: auto;">
-                <table id="enablers-table"></table>
-            </div>
-        </div>
-    </div>
-
-    <div id="change-requests" class="tab-content">
-        <div class="section">
-            <h2>🔁 Change Requests</h2>
-            <p style="color: var(--rc-gray); margin-bottom: 10px;">Items flagged as Change Requests, managed as part of this sprint. Change Requests are tracked separately and excluded from the Validation Status Heatmap.</p>
-            <div style="overflow-x: auto;">
-                <table id="change-requests-table"></table>
-            </div>
-        </div>
-    </div>
-
-    <div id="health" class="tab-content">
-        <div class="section">
-            <h2>🩺 Sprint Health Checks</h2>
-            <p style="color: var(--rc-gray); margin-bottom: 20px;">Backlog hygiene indicators to surface gaps before Sprint Planning and Release readiness reviews. Click a tile to drill into the affected work items.</p>
-            <div class="kpi-grid" id="health-kpi-grid"></div>
-            <div id="health-drilldown"></div>
-        </div>
-    </div>
-
     <script>
         document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
 
         // Countdown Timer
         function updateCountdown() {
-            // Target: July 30, 2026, 6:00 PM CEST (UTC+2)
-            const targetDate = new Date('2026-07-30T18:00:00+02:00');
+            // Target: July 16, 2026, 6:00 PM CEST (UTC+2)
+            const targetDate = new Date('2026-07-16T18:00:00+02:00');
             const now = new Date();
             const diff = targetDate - now;
 
@@ -867,145 +722,121 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // Single source of truth: OM&eB2B - Release 5 - Sprint 21.csv
-        // Each row carries state, assignee, tags, validation flags, story points & parent.
-        // t/u/d/b = Technical/UX/Data/Business validation flags (1 = completed in ADO)
-        const rawItems = [
-            {id:"1445510",title:"[eB2B] Account Navigation Bar",assignee:"Antoine",state:"Qualified",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:3,parent:"1381402"},
-            {id:"1445515",title:"[eB2B] Account Address List Display",assignee:"Antoine",state:"Qualified",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:3,parent:"1381402"},
-            {id:"1445518",title:"[eB2B] Contact Account Manager Widget",assignee:"Antoine",state:"Qualified",tags:["eB2B","FEX","UX"],t:0,u:0,d:0,b:0,sp:2,parent:"1381402"},
-            {id:"1467205",title:"[eB2B] Okta-Based Authentication Redirection",assignee:"Antoine",state:"Qualified",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:2,parent:"1381366"},
-            {id:"1479376",title:"[eB2B] Global Role Definition Framework",assignee:"Antoine",state:"Qualified",tags:["eB2B","UX"],t:1,u:0,d:0,b:0,sp:0,parent:""},
-            {id:"1372523",title:"[OM] OrderPad Product Catalog - Update Advanced Filter Attributes",assignee:"",state:"Qualified",tags:["FEX","Mockup","Order Mgmt","UX"],t:0,u:0,d:0,b:0,sp:5,parent:"970147"},
-            {id:"1379744",title:"[OM] AI-powered Order Management - Cancel Order through Agent conversation",assignee:"Harry",state:"Ready to build",tags:["NoValidation","Order Mgmt"],t:0,u:0,d:0,b:0,sp:8,parent:"970201"},
-            {id:"1272637",title:"[OM][Enabler][Tech] Fetch Account Receivable Data (Customer Balance Details) 🚩",assignee:"Harry",state:"New",tags:["Enabler","NoQA","NoValidation","Order Mgmt"],t:0,u:0,d:0,b:0,sp:13,parent:"970114"},
-            {id:"1432866",title:"[OM] Return Request - Certify Physical Return Conditions",assignee:"Aude",state:"Qualified",tags:["Order Mgmt","UX"],t:1,u:1,d:0,b:1,sp:3,parent:"970206"},
-            {id:"1433099",title:"[OM] Return Request - Provide reason-based evidence",assignee:"Aude",state:"Qualified",tags:["Order Mgmt","UX"],t:1,u:1,d:0,b:1,sp:5,parent:"970206"},
-            {id:"1433408",title:"[OM] Return Request - Provide Product traceability information (expiry date & batch number)",assignee:"Aude",state:"Qualified",tags:["Order Mgmt","UX"],t:0,u:1,d:0,b:1,sp:2,parent:"970206"},
-            {id:"1437196",title:"[OM] Order Header - Ship-To Contact Retrieval for Ship-To Initiated Orders",assignee:"Aude",state:"Qualified",tags:["Order Mgmt"],t:0,u:0,d:0,b:1,sp:3,parent:"970114"},
-            {id:"1443823",title:"[OM] Return Request - Enhance Return Eligibility Window by Return Reason",assignee:"Aude",state:"Qualified",tags:["Order Mgmt","UX"],t:0,u:1,d:0,b:0,sp:3,parent:"970206"},
-            {id:"1468710",title:"[OM][Tech] Product - Enhance ZREP vs. Copack Item Type Classification",assignee:"Aude",state:"New",tags:["0.6 Dependent","Data","eB2B","Order Mgmt"],t:0,u:0,d:0,b:0,sp:1,parent:"1016086"},
-            {id:"1466591",title:"[OM] Ship-To Eligibility – Block Status Validation",assignee:"Aude",state:"Qualified",tags:["Data","eB2B","Order Mgmt"],t:0,u:0,d:0,b:0,sp:1,parent:"1403752"},
-            {id:"1467182",title:"[eB2B] Visit Request",assignee:"Julie",state:"New",tags:["eB2B","FEX","UX"],t:0,u:0,d:0,b:0,sp:2,parent:"1381481"},
-            {id:"1467185",title:"[eB2B] Visit Detail Page",assignee:"Julie",state:"New",tags:["eB2B","FEX","UX"],t:0,u:0,d:0,b:0,sp:2,parent:"1381481"},
-            {id:"1467187",title:"[eB2B] Visit History",assignee:"Julie",state:"New",tags:["eB2B","FEX","UX"],t:0,u:0,d:0,b:0,sp:5,parent:"1381481"},
-            {id:"1467196",title:"[eB2B] Homepage - Visits History Widget",assignee:"Julie",state:"New",tags:["eB2B","FEX","UX"],t:0,u:0,d:0,b:0,sp:5,parent:"1381411"},
-            {id:"1467199",title:"[eB2B] User List Management",assignee:"Julie",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:8,parent:""},
-            {id:"1469833",title:"[eB2B][Change Request] Financial Tiles - Replace Credit Exposure with Available Credit",assignee:"Julie",state:"New",tags:["ChangeRequest","eB2B"],t:0,u:0,d:0,b:0,sp:0,parent:"1381411"},
-            {id:"1445512",title:"[eB2B] Account Data Display",assignee:"Julie",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:2,parent:"1381402"},
-            {id:"1466388",title:"[eB2B] Order Eligibility Rules",assignee:"Julie",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:3,parent:"1381301"},
-            {id:"1482971",title:"[OM][Tech] Materials - Synchronize Item Promotion Type Using Canonical Data Model 🚩",assignee:"Cristina",state:"Qualified",tags:["0.6 Dependent","eB2B","Order Mgmt"],t:0,u:0,d:0,b:0,sp:1,parent:"1016086"},
-            {id:"1483098",title:"[OM][Change Request][Tech] Billing Document - Support Document Types for Free of Charge Orders (ZFOC / ZSFO) 🚩",assignee:"Cristina",state:"Qualified",tags:["ChangeRequest","eB2B","Order Mgmt"],t:0,u:0,d:0,b:0,sp:13,parent:"970204"},
-            {id:"1083635",title:"[OM][Enabler] Promotions Display (Static Capture)",assignee:"Eline",state:"New",tags:["eB2B","Enabler","NoQA","NoValidation","Order Mgmt"],t:0,u:0,d:0,b:0,sp:13,parent:"1089831"},
-            {id:"1443832",title:"[OM] Return Request - Prevent Return Requests if Minimum Product Value for Physical Return > Total Items Returned Net Value",assignee:"Eline",state:"Qualified",tags:["Order Mgmt","UX"],t:0,u:1,d:0,b:1,sp:3,parent:"970206"},
-            {id:"1454728",title:"[OM][Enabler] Define R6 Automated Returns Capabilities",assignee:"Eline",state:"New",tags:["eB2B","Enabler","NoQA","NoValidation","Order Mgmt"],t:0,u:0,d:0,b:0,sp:13,parent:"970206"},
-            {id:"1467226",title:"[eB2B] Federation ID Handling",assignee:"Justine",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:0,parent:"1381366"},
-            {id:"1467244",title:"[eB2B] Authentication Failure Handling",assignee:"Justine",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:0,parent:"1381366"},
-            {id:"1467249",title:"[eB2B] Manual User Creation & Activation (Internal)",assignee:"Justine",state:"New",tags:["eB2B"],t:0,u:0,d:0,b:0,sp:3,parent:"1381392"},
-            {id:"1467272",title:"[eB2B] Cross-Account Data Bridging",assignee:"Justine",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:0,parent:"1381397"},
-            {id:"1480245",title:"[eB2B] ACR-Based Role Assignment",assignee:"Justine",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:8,parent:"1381401"},
-            {id:"1482592",title:"[eB2B] Contact-Level Role Visibility",assignee:"Justine",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:0,parent:"1381401"},
-            {id:"1482596",title:"[eB2B] Sales Channel & Origin Consolidation",assignee:"Justine",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:0,parent:"1381489"},
-            {id:"1482600",title:"[eB2B] Standardized Status Naming",assignee:"Justine",state:"New",tags:["eB2B","UX"],t:0,u:0,d:0,b:0,sp:0,parent:"1381489"},
-            {id:"1443825",title:"[OM] Return Request - Block returns based on Account Block Status",assignee:"Diane",state:"New",tags:["Order Mgmt","UX"],t:0,u:1,d:0,b:1,sp:3,parent:"970206"},
-            {id:"1381063",title:"[OM] Cancellation Email - Adaptive Cancellation Email Logic (User-Controlled & Multi-Origin)",assignee:"",state:"Qualified",tags:["Order Mgmt","SprintValidation"],t:0,u:0,d:0,b:0,sp:2,parent:"970201"},
-            {id:"1454200",title:"[OM] Return Request - Restrict available Return Reasons for B2B Customers",assignee:"",state:"Qualified",tags:["eB2B","Order Mgmt"],t:1,u:0,d:0,b:1,sp:2,parent:"970206"},
-            {id:"1083626",title:"[OM] Translate Sandbox - Prepare for OM Localization Capabilities",assignee:"",state:"New",tags:["Order Mgmt"],t:0,u:0,d:0,b:0,sp:8,parent:"970209"},
-            {id:"1363368",title:"[OM] Cancellation Email Control & Recipient Selection",assignee:"",state:"Qualified",tags:["Mockup","Order Mgmt","SprintValidation","UX"],t:1,u:0,d:0,b:0,sp:1,parent:"970201"},
-            {id:"1369288",title:"[OM] Unified Order Cancellation (All Channels)",assignee:"",state:"Qualified",tags:["Order Mgmt","SprintValidation"],t:1,u:0,d:0,b:0,sp:1,parent:"970201"},
-            {id:"1443326",title:"[OM] Unified Order Cancellation (EDI Channel)",assignee:"",state:"Qualified",tags:["Order Mgmt","SprintValidation"],t:1,u:0,d:0,b:0,sp:1,parent:"970201"},
-            {id:"1443330",title:"[OM] Unified Return Requests (EDI Channel)",assignee:"",state:"Qualified",tags:["Order Mgmt","SprintValidation"],t:1,u:0,d:0,b:1,sp:1,parent:"970206"},
-            {id:"1467229",title:"[eB2B] Login Page Support Access",assignee:"",state:"Qualified",tags:["eB2B","UX"],t:1,u:0,d:0,b:0,sp:0,parent:"1381366"}
+        // Sprint scope from CSV (Expected Validations) with Parent info
+        const sprintScope = [
+            {id:"1403754",title:"[OM] Dynamic Default Sold-To Resolution for Order Initialization",parent:"1403752",ux:"Not applicable",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1396355",title:"[OM] Dynamic Default Ship-To Resolution for Order Initialization",parent:"1403752",ux:"Not applicable",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1440453",title:"[OM] Order Simulation - Error Message for Clinical Alliance Excluded Products",parent:"",ux:"Not applicable",data:"Not applicable",business:"Validated",solution:"Validated"},
+            {id:"1381838",title:"[OM] Extend Product2 Data Model for Akeneo Data",parent:"1016086",ux:"Not applicable",data:"Pending",business:"Pending",solution:"Pending"},
+            {id:"1379016",title:"[OM] Align Product Naming across the ordering experience",parent:"970144",ux:"Pending",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1404528",title:"[OM] Expose Akeneo Product Content on Product2 Page Layouts & UI",parent:"1016086",ux:"Not applicable",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1403698",title:"[OM] Product Image Gallery Component on Product Record Page",parent:"970209",ux:"Not applicable",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1439274",title:"[OM][Tech] Product - Enhance Item Type Classification",parent:"1016086",ux:"Not applicable",data:"Pending",business:"Pending",solution:"Pending"},
+            {id:"1363270",title:"[OM] AI-powered Order Management - Find products through Agent conversation",parent:"970147",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Not applicable"},
+            {id:"1387705",title:"[OM] Checkout - Expose & Manage Delivery and Picking Instructions (Account data)",parent:"970183",ux:"Pending",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1455005",title:"[OM] Expose logistics length limits on Delivery & Picking Instructions",parent:"970183",ux:"Pending",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1363060",title:"[OM] Rework Return Management for Free Goods (S/4H Compatibility)",parent:"970206",ux:"Pending",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1381005",title:"[OM] Provide end-to-end traceability across Orders, Return Orders, Invoices, and Credit Notes",parent:"970204",ux:"Pending",data:"Pending",business:"Pending",solution:"Validated"},
+            {id:"1395655",title:"[OM][NFR] Auto-Assign Products to Configured Default Catalog Category",parent:"970209",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Pending"},
+            {id:"1381563",title:"[OM][NFR] Order/Return Origin - Standardize Origin picklist values",parent:"970114",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Pending"},
+            {id:"1398079",title:"[OM][NFR] Return - Return Reason Propagation from Header to Line Level",parent:"970206",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Pending"},
+            {id:"1405149",title:"[OM][Tech] AR Document Type - Update API Names & Define Backward Compatibility Strategy",parent:"970204",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Pending"},
+            {id:"1439225",title:"[OM][Tech] Materials - Retrieve Classification Attributes",parent:"1016086",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Not applicable"},
+            {id:"1020600",title:"[OM][Tech] Product Content & Assets - Interface Salesforce to Akeneo",parent:"1016086",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Not applicable"},
+            {id:"1442306",title:"[OM][Tech] salesOrderInfo – Retrieve Expiry Date, Production Date and Batch Number",parent:"970197",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Not applicable"},
+            {id:"1404835",title:"[OM][Tech] BillingInfo - Remove Transformation on Document Type (S/4H→ Salesforce)",parent:"970204",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Not applicable"},
+            {id:"1391382",title:"[OM][Tech] - Return Traceability to Original Order & Invoice & Credit Memo",parent:"970204",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Not applicable"},
+            {id:"1433785",title:"[OM][Change Request] Checkout Delivery - Display Account Name in Ship-To Delivery Selector",parent:"970183",ux:"Pending",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1450620",title:"[OM][Change Request] Free-of-Charge Orders - Suppress Tax Display",parent:"970168",ux:"Pending",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1375111",title:"[OM][Change Request][TECH] External Orders - Align Customer Reference Mapping",parent:"970114",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Pending"},
+            {id:"1468795",title:"[OM][Change Request] Financial Tiles - Replace Credit Exposure with Available Credit",parent:"970114",ux:"Not applicable",data:"Not applicable",business:"Pending",solution:"Pending"},
+            {id:"1272634",title:"[OM][Enabler] Order Header - View Open AR Documents from Financial Tiles",parent:"970114",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Not applicable"},
+            {id:"1396586",title:"[OM][Change Request] Confirmation Email - Standardize Price, Label & Weight Formatting",parent:"970196",ux:"Not applicable",data:"Not applicable",business:"Validated",solution:"Validated"},
+            {id:"1440374",title:"[OM][Change Request] Confirmation Email - Remove placeholder for CS Contact Email Address in Email Footer Templates",parent:"970196",ux:"Not applicable",data:"Not applicable",business:"Validated",solution:"Validated"},
+            {id:"1403703",title:"[OM][Change Request] Product Catalog - Expand Main Item Variations by Default",parent:"970144",ux:"Not applicable",data:"Not applicable",business:"Validated",solution:"Validated"},
+            {id:"1428734",title:"[OM][Change Request] Order Header - Remove Order Header step title",parent:"",ux:"Not applicable",data:"Not applicable",business:"Validated",solution:"Validated"},
+            {id:"1460735",title:"[OM][Change Request][Tech] Order Status Picklists - Harmonize with Canonical Data Model",parent:"970199",ux:"Not applicable",data:"Not applicable",business:"Not applicable",solution:"Pending"}
         ];
 
-        // Derive the working maps from the single source
-        const sprintScope = rawItems.map(i => ({id:i.id, title:i.title, parent:i.parent || ""}));
-        const adoData = {};
-        const metaData = {};
-        const tagsData = {};
-        const storyPoints = {};
-        rawItems.forEach(i => {
-            adoData[i.id] = {technical:i.t, ux:i.u, data:i.d, business:i.b};
-            metaData[i.id] = {state:i.state, assignee:i.assignee};
-            tagsData[i.id] = i.tags;
-            storyPoints[i.id] = i.sp;
-        });
-
-        // Parent ID to Name mapping (falls back to the raw parent ID when unknown)
+        // Parent ID to Name mapping
         const parentNames = {
-            "970147": "AI-Powered Features",
-            "970201": "Order Cancellation Management",
-            "970114": "Order Processing & Standards",
-            "970206": "Return Management",
-            "970204": "Billing & Invoicing",
             "1403752": "Dynamic Account Resolution",
-            "970209": "Product Management & Display",
-            "1089831": "Promotions Management",
             "1016086": "Product Content & Akeneo Integration",
-            "1381402": "eB2B Account Experience",
-            "1381366": "eB2B Authentication & Access",
-            "1381301": "eB2B Ordering",
-            "1381481": "eB2B Visit Management",
-            "1381476": "eB2B Order Cancellation",
-            "1381411": "eB2B Homepage & Dashboard",
-            "1381392": "eB2B User Management",
-            "1381397": "eB2B Data Bridging",
-            "1381401": "eB2B Roles & Permissions",
-            "1381489": "eB2B Data Standardization"
+            "970144": "Product Catalog Enhancement",
+            "970209": "Product Management & Display",
+            "970147": "AI-Powered Features",
+            "970183": "Checkout & Delivery Management",
+            "970206": "Return Management",
+            "970204": "Order & Invoice Traceability",
+            "970114": "Order Processing & Standards",
+            "970197": "Sales Order Information",
+            "970168": "Free-of-Charge Order Processing",
+            "970199": "Delivery Block Management",
+            "970196": "Email Notifications"
         };
 
-        // Workstream membership is derived from the title markers [OM] / [eB2B].
-        // An item may carry both markers and belong to both workstreams.
-        const deriveWorkstreams = (title) => {
-            const ws = [];
-            if (/\[OM\]/i.test(title)) ws.push("OM");
-            if (/\[eB2B\]/i.test(title)) ws.push("eB2B");
-            return ws.length ? ws : ["OM"];
+        // ADO actual validation status
+        const adoData = {
+            "1403754":{technical:1,ux:0,data:0,business:1},
+            "1396355":{technical:1,ux:0,data:0,business:1},
+            "1381838":{technical:1,ux:0,data:1,business:1},
+            "1379016":{technical:1,ux:1,data:0,business:1},
+            "1404528":{technical:1,ux:0,data:0,business:1},
+            "1403698":{technical:1,ux:0,data:0,business:1},
+            "1439274":{technical:1,ux:0,data:1,business:1},
+            "1363270":{technical:0,ux:0,data:0,business:0},
+            "1387705":{technical:1,ux:1,data:0,business:1},
+            "1455005":{technical:1,ux:1,data:0,business:1},
+            "1363060":{technical:1,ux:1,data:0,business:1},
+            "1381005":{technical:1,ux:1,data:1,business:1},
+            "1395655":{technical:1,ux:0,data:0,business:0},
+            "1381563":{technical:1,ux:0,data:0,business:0},
+            "1398079":{technical:1,ux:0,data:0,business:0},
+            "1405149":{technical:1,ux:0,data:0,business:0},
+            "1439225":{technical:0,ux:0,data:0,business:0},
+            "1020600":{technical:0,ux:0,data:0,business:0},
+            "1442306":{technical:0,ux:0,data:0,business:0},
+            "1404835":{technical:0,ux:0,data:0,business:0},
+            "1391382":{technical:0,ux:0,data:0,business:0},
+            "1433785":{technical:1,ux:1,data:0,business:1},
+            "1450620":{technical:1,ux:1,data:0,business:1},
+            "1375111":{technical:1,ux:0,data:0,business:0},
+            "1468795":{technical:1,ux:0,data:0,business:1},
+            "1272634":{technical:1,ux:0,data:0,business:0},
+            "1396586":{technical:1,ux:0,data:0,business:1},
+            "1440374":{technical:1,ux:0,data:0,business:1},
+            "1403703":{technical:1,ux:0,data:0,business:1},
+            "1428734":{technical:1,ux:0,data:0,business:1},
+            "1460735":{technical:1,ux:0,data:0,business:0}
         };
 
         // Process stories
         let processedStories = [];
         let allStoriesForFiltering = [];
 
-        // Assignees whose ownership indicates solutioning is being finalised
-        const solutioningOwners = ["Edouard", "Harry", "Antoine", "Eline", "Cristina", "Justine", "Julie", "Noémie", "Aude", "Diane"];
-
         sprintScope.forEach(story => {
             const ado = adoData[story.id] || {technical:0,ux:0,data:0,business:0};
-            const meta = metaData[story.id] || {state:"", assignee:""};
 
-            // Solutioning status derived from ADO State + Assignee:
-            //  - State New            -> In Progress (regardless of assignee)
-            //  - State Qualified + owner in list -> Under Finalisation
-            //  - all other cases      -> Finalised
-            let solutioningStatus;
-            if (meta.state === "New") {
-                solutioningStatus = "Being Worked On";
-            } else if (meta.state === "Qualified" && solutioningOwners.includes(meta.assignee)) {
-                solutioningStatus = "Being Finalised";
-            } else {
-                solutioningStatus = "Finalised";
-            }
+            const uxExpected = story.ux !== "Not applicable";
+            const dataExpected = story.data !== "Not applicable";
+            const businessExpected = story.business !== "Not applicable";
+            const solutionExpected = story.solution !== "Not applicable";
 
-            // Validation-type requirements (rules based on ADO Tags, work item type & title):
-            //  - UX       : required if the "UX" tag is present
-            //  - Data     : required if the "Data" tag is present
-            //  - Business : required for all User Stories, except [Tech] titles or the "NoValidation" tag
-            //  - Solution : required for all User Stories, except the "NoValidation" tag
-            const tags = tagsData[story.id] || [];
-            const hasTag = (t) => tags.some(tag => tag.toLowerCase() === t.toLowerCase());
-            const isTech = /\[Tech\]/i.test(story.title);
-            const noValidation = hasTag("NoValidation");
+            const uxStatus = !uxExpected ? "N/A" :
+                           (story.ux === "Validated" || ado.ux === 1) ? "Completed" :
+                           (story.ux === "Offline Val.") ? "Completed (Offline)" : "Pending";
 
-            const uxExpected = hasTag("UX");
-            const dataExpected = hasTag("Data");
-            const businessExpected = !noValidation && !isTech;
-            const solutionExpected = !noValidation;
+            const dataStatus = !dataExpected ? "N/A" :
+                             (story.data === "Validated" || ado.data === 1) ? "Completed" :
+                             (story.data === "Offline Val.") ? "Completed (Offline)" : "Pending";
 
-            const uxStatus = !uxExpected ? "N/A" : (ado.ux === 1 ? "Completed" : "Pending");
-            const dataStatus = !dataExpected ? "N/A" : (ado.data === 1 ? "Completed" : "Pending");
-            const businessStatus = !businessExpected ? "N/A" : (ado.business === 1 ? "Completed" : "Pending");
-            const solutionStatus = !solutionExpected ? "N/A" : (ado.technical === 1 ? "Completed" : "Pending");
+            const businessStatus = !businessExpected ? "N/A" :
+                                 (story.business === "Validated" || ado.business === 1) ? "Completed" :
+                                 (story.business === "Offline Val.") ? "Completed (Offline)" : "Pending";
+
+            const solutionStatus = !solutionExpected ? "N/A" :
+                                 (story.solution === "Validated" || ado.technical === 1) ? "Completed" :
+                                 (story.solution === "Offline Val.") ? "Completed (Offline)" : "Pending";
 
             const missingValidations = [];
             if (uxExpected && !uxStatus.includes("Completed")) missingValidations.push("UX");
@@ -1020,18 +851,6 @@
                 parent: story.parent || '',
                 parentName: story.parent ? (parentNames[story.parent] || story.parent) : '',
                 title: story.title,
-                isEnabler: /\[Enabler\]/i.test(story.title),
-                isChangeRequest: /\[Change Request\]/i.test(story.title),
-                workstreams: deriveWorkstreams(story.title),
-                storyPoints: storyPoints[story.id] || 0,
-                hasStoryPoints: (storyPoints[story.id] || 0) > 0,
-                tags: tags,
-                isEnablerTag: hasTag("Enabler"),
-                workItemType: "User Story",
-                iteration: "Release 5 / Sprint 21",
-                state: meta.state,
-                assignee: meta.assignee,
-                solutioningStatus,
                 uxExpected, uxStatus,
                 dataExpected, dataStatus,
                 businessExpected, businessStatus,
@@ -1044,124 +863,140 @@
             allStoriesForFiltering.push(processedStory);
         });
 
-        // Map internal solutioning status to display label + criticality emoji
-        const solutioningDisplay = (s) => {
-            if (s === "Finalised") return { label: "Finalised", emoji: "🟢" };
-            if (s === "Being Finalised") return { label: "Under Finalisation", emoji: "🟡" };
-            return { label: "In Progress", emoji: "🔴" };
-        };
-
-        // Current workstream view: 'ALL' (OM + eB2B), 'OM', or 'eB2B'
-        let currentView = 'ALL';
-
-        function renderDashboard(view) {
-            currentView = view;
-            const viewStories = view === 'ALL'
-                ? processedStories
-                : processedStories.filter(s => s.workstreams.includes(view));
-
         // Calculate KPIs
-        const totalStories = viewStories.length;
+        const totalStories = processedStories.length;
+        const readyStories = processedStories.filter(s => s.readiness === "Ready").length;
+        const notReadyStories = totalStories - readyStories;
+        const readinessPercentage = ((readyStories / totalStories) * 100).toFixed(1);
 
-        // Features exclude Enablers and Change Requests; readiness is measured against Features only
-        const featureStories = viewStories.filter(s => !s.isEnabler && !s.isChangeRequest);
-        const totalFeatures = featureStories.length;
-        const readyStories = featureStories.filter(s => s.readiness === "Ready").length;
-        const notReadyStories = totalFeatures - readyStories;
-        const readinessPercentage = totalFeatures > 0 ? ((readyStories / totalFeatures) * 100).toFixed(1) : "0.0";
-
-        const uxExpectedCount = viewStories.filter(s => s.uxExpected).length;
-        const uxCompletedCount = viewStories.filter(s => s.uxExpected && s.uxStatus.includes("Completed")).length;
+        const uxExpectedCount = processedStories.filter(s => s.uxExpected).length;
+        const uxCompletedCount = processedStories.filter(s => s.uxExpected && s.uxStatus.includes("Completed")).length;
         const uxProgress = uxExpectedCount > 0 ? ((uxCompletedCount / uxExpectedCount) * 100).toFixed(1) : "N/A";
 
-        const dataExpectedCount = viewStories.filter(s => s.dataExpected).length;
-        const dataCompletedCount = viewStories.filter(s => s.dataExpected && s.dataStatus.includes("Completed")).length;
+        const dataExpectedCount = processedStories.filter(s => s.dataExpected).length;
+        const dataCompletedCount = processedStories.filter(s => s.dataExpected && s.dataStatus.includes("Completed")).length;
         const dataProgress = dataExpectedCount > 0 ? ((dataCompletedCount / dataExpectedCount) * 100).toFixed(1) : "N/A";
 
-        const businessExpectedCount = viewStories.filter(s => s.businessExpected).length;
-        const businessCompletedCount = viewStories.filter(s => s.businessExpected && s.businessStatus.includes("Completed")).length;
+        const businessExpectedCount = processedStories.filter(s => s.businessExpected).length;
+        const businessCompletedCount = processedStories.filter(s => s.businessExpected && s.businessStatus.includes("Completed")).length;
         const businessProgress = businessExpectedCount > 0 ? ((businessCompletedCount / businessExpectedCount) * 100).toFixed(1) : "N/A";
 
-        const solutionExpectedCount = viewStories.filter(s => s.solutionExpected).length;
-        const solutionCompletedCount = viewStories.filter(s => s.solutionExpected && s.solutionStatus.includes("Completed")).length;
+        const solutionExpectedCount = processedStories.filter(s => s.solutionExpected).length;
+        const solutionCompletedCount = processedStories.filter(s => s.solutionExpected && s.solutionStatus.includes("Completed")).length;
         const solutionProgress = solutionExpectedCount > 0 ? ((solutionCompletedCount / solutionExpectedCount) * 100).toFixed(1) : "N/A";
 
-        // Render Scope Composition (Features vs Change Requests vs Enablers)
-        const enablerCount = viewStories.filter(s => s.isEnabler).length;
-        const changeRequestCount = viewStories.filter(s => s.isChangeRequest && !s.isEnabler).length;
-        const featureCount = totalStories - enablerCount - changeRequestCount;
+        // Render KPI Cards
+        const readinessClass = readinessPercentage >= 80 ? 'excellent' : readinessPercentage >= 60 ? 'good' : readinessPercentage >= 40 ? 'warning' : 'danger';
 
-        // Total story points planned for delivery in the current view
-        const totalStoryPoints = viewStories.reduce((sum, s) => sum + (s.storyPoints || 0), 0);
+        // A validation tile is "complete" when it's expected somewhere and 100% done
+        const isComplete = (progress) => progress !== 'N/A' && parseFloat(progress) >= 100;
 
-        // Feature solutioning breakdown
-        const featureSolFinalising = featureStories.filter(s => s.solutioningStatus === "Being Finalised").length;
-        const featureSolWorkedOn = featureStories.filter(s => s.solutioningStatus === "Being Worked On").length;
-        const featureSolFinalised = featureStories.filter(s => s.solutioningStatus === "Finalised").length;
+        let kpiHTML = '';
+        kpiHTML += '<div class="kpi-card ' + readinessClass + '">';
+        kpiHTML += '<div class="kpi-label">Stories Ready for Build</div>';
+        kpiHTML += '<div class="kpi-value">' + readinessPercentage + '%</div>';
+        kpiHTML += '<div class="kpi-subtitle">' + readyStories + ' of ' + totalStories + ' stories ready</div>';
+        kpiHTML += '</div>';
 
-        const featureBreakdown = [
-            { label: 'Solutioning finalised', count: featureSolFinalised, color: '#28a745' },
-            { label: 'Solutioning being finalised', count: featureSolFinalising, color: '#ffc107' },
-            { label: 'Solutioning being worked on', count: featureSolWorkedOn, color: '#dc3545' }
-        ];
+        const uxClass = uxProgress === 'N/A' ? 'good' : (parseFloat(uxProgress) >= 70 ? 'excellent' : parseFloat(uxProgress) >= 50 ? 'good' : 'warning');
+        kpiHTML += '<div class="kpi-card ' + uxClass + (isComplete(uxProgress) ? ' complete' : '') + '" data-validation-tile="1">';
+        kpiHTML += '<div class="kpi-label">UX Validation Progress</div>';
+        kpiHTML += '<div class="kpi-value">' + (uxProgress === 'N/A' ? 'N/A' : uxProgress + '%') + '</div>';
+        kpiHTML += '<div class="kpi-subtitle">' + uxCompletedCount + ' of ' + uxExpectedCount + ' completed</div>';
+        kpiHTML += '</div>';
 
-        const composition = [
-            { label: 'Features', count: featureCount, color: '#CC0000' },
-            { label: 'Enablers', count: enablerCount, color: '#17a2b8' },
-            { label: 'Change Requests', count: changeRequestCount, color: '#fd7e14' }
-        ];
+        const dataClass = dataProgress === 'N/A' ? 'good' : (parseFloat(dataProgress) >= 70 ? 'excellent' : parseFloat(dataProgress) >= 50 ? 'good' : 'warning');
+        kpiHTML += '<div class="kpi-card ' + dataClass + (isComplete(dataProgress) ? ' complete' : '') + '" data-validation-tile="1">';
+        kpiHTML += '<div class="kpi-label">Data Validation Progress</div>';
+        kpiHTML += '<div class="kpi-value">' + (dataProgress === 'N/A' ? 'N/A' : dataProgress + '%') + '</div>';
+        kpiHTML += '<div class="kpi-subtitle">' + dataCompletedCount + ' of ' + dataExpectedCount + ' completed</div>';
+        kpiHTML += '</div>';
 
-        const tilePct = (c) => totalStories > 0 ? ((c.count / totalStories) * 100).toFixed(0) : 0;
-        const feature = composition.find(c => c.label === 'Features');
-        const secondaryTiles = composition.filter(c => c.label !== 'Features');
+        const businessClass = businessProgress === 'N/A' ? 'good' : (parseFloat(businessProgress) >= 70 ? 'excellent' : parseFloat(businessProgress) >= 50 ? 'good' : 'warning');
+        kpiHTML += '<div class="kpi-card ' + businessClass + (isComplete(businessProgress) ? ' complete' : '') + '" data-validation-tile="1">';
+        kpiHTML += '<div class="kpi-label">Business Validation Progress</div>';
+        kpiHTML += '<div class="kpi-value">' + (businessProgress === 'N/A' ? 'N/A' : businessProgress + '%') + '</div>';
+        kpiHTML += '<div class="kpi-subtitle">' + businessCompletedCount + ' of ' + businessExpectedCount + ' completed</div>';
+        kpiHTML += '</div>';
 
-        let compHTML = '<div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:25px; align-items:stretch;">';
+        const solutionClass = solutionProgress === 'N/A' ? 'good' : (parseFloat(solutionProgress) >= 70 ? 'excellent' : parseFloat(solutionProgress) >= 50 ? 'good' : 'warning');
+        kpiHTML += '<div class="kpi-card ' + solutionClass + (isComplete(solutionProgress) ? ' complete' : '') + '" data-validation-tile="1">';
+        kpiHTML += '<div class="kpi-label">Solution Validation Progress</div>';
+        kpiHTML += '<div class="kpi-value">' + (solutionProgress === 'N/A' ? 'N/A' : solutionProgress + '%') + '</div>';
+        kpiHTML += '<div class="kpi-subtitle">' + solutionCompletedCount + ' of ' + solutionExpectedCount + ' completed</div>';
+        kpiHTML += '</div>';
 
-        // Features tile (left)
-        compHTML += '<div style="flex:1; min-width:200px; text-align:center; padding:20px; border-radius:8px; background:#f8f9fa; border-top:4px solid ' + feature.color + ';">';
-        compHTML += '<div style="font-size:2.6em; font-weight:700; color:' + feature.color + '; line-height:1;">' + feature.count + '</div>';
-        compHTML += '<div style="font-size:0.95em; color:#495057; font-weight:600; margin-top:8px;">' + feature.label + '</div>';
-        compHTML += '<div style="font-size:0.8em; color:#6c757d; margin-top:4px;">' + tilePct(feature) + '% of ' + totalStories + '</div>';
-        compHTML += '<div style="margin-top:16px; padding-top:14px; border-top:1px dashed #dee2e6; text-align:left;">';
-        featureBreakdown.forEach(b => {
-            compHTML += '<div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">';
-            compHTML += '<span style="width:10px; height:10px; border-radius:50%; background:' + b.color + '; flex-shrink:0;"></span>';
-            compHTML += '<span style="font-weight:700; color:' + b.color + '; min-width:20px;">' + b.count + '</span>';
-            compHTML += '<span style="font-size:0.8em; color:#495057;">' + b.label + '</span>';
-            compHTML += '</div>';
+        kpiHTML += '<div class="kpi-card warning">';
+        kpiHTML += '<div class="kpi-label">Stories Not Ready</div>';
+        kpiHTML += '<div class="kpi-value">' + notReadyStories + '</div>';
+        kpiHTML += '<div class="kpi-subtitle">Require attention</div>';
+        kpiHTML += '</div>';
+
+        document.getElementById('kpi-grid').innerHTML = kpiHTML;
+
+        // Celebrate any validation tile that reached 100% with a confetti burst
+        function launchConfetti(tile) {
+            const colors = ['#CC0000', '#28a745', '#ffc107', '#0d6efd', '#ffffff', '#990000'];
+            const pieces = 40;
+            for (let i = 0; i < pieces; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                const color = colors[i % colors.length];
+                piece.style.background = color;
+                if (i % 3 === 0) piece.style.borderRadius = '50%';
+                // Start near the top of the tile, spread horizontally
+                const startX = 20 + Math.floor((i / pieces) * 60) + (i % 5) * 3;
+                piece.style.left = startX + '%';
+                piece.style.top = '10px';
+                // Random-ish trajectory driven by CSS custom props
+                const spread = (i % 2 === 0 ? 1 : -1) * (30 + (i * 7) % 90);
+                const drop = 120 + (i * 13) % 120;
+                const rot = ((i * 47) % 720) + 'deg';
+                piece.style.setProperty('--dx', spread + 'px');
+                piece.style.setProperty('--dy', drop + 'px');
+                piece.style.setProperty('--rot', rot);
+                const duration = 1.1 + (i % 6) * 0.15;
+                const delay = (i % 8) * 0.04;
+                piece.style.animation = 'confetti-fall ' + duration + 's ease-in ' + delay + 's forwards';
+                tile.appendChild(piece);
+                // Clean up after the animation completes
+                piece.addEventListener('animationend', () => piece.remove());
+            }
+        }
+
+        document.querySelectorAll('.kpi-card.complete').forEach((tile, idx) => {
+            // Stagger multiple simultaneous bursts slightly
+            setTimeout(() => launchConfetti(tile), 250 + idx * 200);
         });
-        compHTML += '</div>';
-        compHTML += '</div>';
 
-        // Enablers + Change Requests stacked (right), total height matches Features tile
-        compHTML += '<div style="flex:1; min-width:160px; display:flex; flex-direction:column; gap:20px;">';
-        secondaryTiles.forEach(c => {
-            compHTML += '<div style="flex:1; text-align:center; padding:20px; border-radius:8px; background:#f8f9fa; border-top:4px solid ' + c.color + '; display:flex; flex-direction:column; justify-content:center;">';
-            compHTML += '<div style="font-size:2.6em; font-weight:700; color:' + c.color + '; line-height:1;">' + c.count + '</div>';
-            compHTML += '<div style="font-size:0.95em; color:#495057; font-weight:600; margin-top:8px;">' + c.label + '</div>';
-            compHTML += '<div style="font-size:0.8em; color:#6c757d; margin-top:4px;">' + tilePct(c) + '% of ' + totalStories + '</div>';
-            compHTML += '</div>';
-        });
-        compHTML += '</div>';
+        // Render Alert Box
+        const storiesNeedingAttention = processedStories.filter(s => s.readiness === "Not Ready");
+        if (storiesNeedingAttention.length > 0) {
+            let alertHTML = '<div class="alert-box">';
+            alertHTML += '<h3>⚠️ Stories Requiring Immediate Attention (' + storiesNeedingAttention.length + ')</h3>';
+            alertHTML += '<ul>';
 
-        compHTML += '</div>';
+            // Show first 5 stories by default
+            storiesNeedingAttention.slice(0, 5).forEach(s => {
+                const adoUrl = 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + s.id;
+                alertHTML += '<li><strong><a href="' + adoUrl + '" target="_blank" style="color: #856404; text-decoration: none;">' + s.id + '</a></strong>: ' + s.title.substring(0, 80) + (s.title.length > 80 ? '...' : '') + ' - Missing: <strong>' + s.missingValidations.join(', ') + '</strong></li>';
+            });
 
-        // Stacked proportion bar
-        compHTML += '<div style="display:flex; height:30px; border-radius:15px; overflow:hidden; box-shadow:inset 0 0 3px rgba(0,0,0,0.2);">';
-        composition.forEach(c => {
-            if (c.count === 0) return;
-            const pct = (c.count / totalStories) * 100;
-            compHTML += '<div title="' + c.label + ': ' + c.count + '" style="width:' + pct + '%; background:' + c.color + '; display:flex; align-items:center; justify-content:center; color:white; font-weight:600; font-size:0.8em;">' + c.count + '</div>';
-        });
-        compHTML += '</div>';
+            // Add hidden stories (collapsed by default)
+            if (storiesNeedingAttention.length > 5) {
+                alertHTML += '<div class="hidden-stories" id="hidden-stories">';
+                storiesNeedingAttention.slice(5).forEach(s => {
+                    const adoUrl = 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + s.id;
+                    alertHTML += '<li><strong><a href="' + adoUrl + '" target="_blank" style="color: #856404; text-decoration: none;">' + s.id + '</a></strong>: ' + s.title.substring(0, 80) + (s.title.length > 80 ? '...' : '') + ' - Missing: <strong>' + s.missingValidations.join(', ') + '</strong></li>';
+                });
+                alertHTML += '</div>';
+                alertHTML += '<li class="expand-toggle" id="expand-toggle" onclick="toggleHiddenStories()">... and ' + (storiesNeedingAttention.length - 5) + ' more stories (click to expand)</li>';
+            }
 
-        // Story points planned for delivery
-        compHTML += '<div style="margin-top:18px; text-align:center; padding:12px; background:#f8f9fa; border-radius:8px;">';
-        compHTML += '<span style="font-size:1.8em; font-weight:700; color:var(--rc-red);">' + totalStoryPoints + '</span>';
-        compHTML += '<span style="font-size:0.9em; color:#495057; font-weight:600; margin-left:8px;">Story Points planned for delivery</span>';
-        compHTML += '</div>';
-
-        document.getElementById('scope-composition').innerHTML = compHTML;
+            alertHTML += '</ul>';
+            alertHTML += '</div>';
+            document.getElementById('alert-section').innerHTML = alertHTML;
+        }
 
         // Render Readiness Chart (Simple Donut)
         const readyPercent = parseFloat(readinessPercentage);
@@ -1181,25 +1016,20 @@
         let progressHTML = '';
 
         const renderProgressBar = (label, completed, total, progress) => {
-            let html = '<div class="progress-bar-container">';
-            if (total === 0) {
-                html += '<div class="progress-bar-label"><span>' + label + '</span></div>';
-                html += '<div class="progress-bar" style="display:flex; align-items:center; justify-content:center;"><span style="color:#6c757d; font-size:0.85em; font-style:italic;">No validation expected</span></div>';
-                html += '</div>';
-                return html;
-            }
+            if (total === 0) return '';
             const percent = parseFloat(progress);
             const progressClass = percent >= 70 ? '' : (percent >= 40 ? 'medium' : 'low');
+            let html = '<div class="progress-bar-container">';
             html += '<div class="progress-bar-label"><span>' + label + '</span><span>' + completed + '/' + total + ' (' + progress + '%)</span></div>';
             html += '<div class="progress-bar"><div class="progress-fill ' + progressClass + '" style="width:' + progress + '%">' + progress + '%</div></div>';
             html += '</div>';
             return html;
         };
 
-        progressHTML += renderProgressBar('UX Validation', uxCompletedCount, uxExpectedCount, uxProgress);
-        progressHTML += renderProgressBar('Data Validation', dataCompletedCount, dataExpectedCount, dataProgress);
-        progressHTML += renderProgressBar('Business Validation', businessCompletedCount, businessExpectedCount, businessProgress);
-        progressHTML += renderProgressBar('Solution Validation', solutionCompletedCount, solutionExpectedCount, solutionProgress);
+        if (uxExpectedCount > 0) progressHTML += renderProgressBar('UX Validation', uxCompletedCount, uxExpectedCount, uxProgress);
+        if (dataExpectedCount > 0) progressHTML += renderProgressBar('Data Validation', dataCompletedCount, dataExpectedCount, dataProgress);
+        if (businessExpectedCount > 0) progressHTML += renderProgressBar('Business Validation', businessCompletedCount, businessExpectedCount, businessProgress);
+        if (solutionExpectedCount > 0) progressHTML += renderProgressBar('Solution Validation', solutionCompletedCount, solutionExpectedCount, solutionProgress);
 
         document.getElementById('validation-progress').innerHTML = progressHTML;
 
@@ -1212,23 +1042,14 @@
         };
 
         let heatmapHTML = '<thead><tr>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(0)">Story ID</th>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(1)">Title</th>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(2)">Solutioning Status</th>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(3)">UX</th>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(4)">Data</th>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(5)">Business</th>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(6)">Solution</th>';
-        heatmapHTML += '<th class="sortable" onclick="sortHeatmap(7)">Overall</th>';
-        heatmapHTML += '</tr></thead><tbody id="heatmap-tbody">';
+        heatmapHTML += '<th>Story ID</th><th>Title</th><th>UX</th><th>Data</th><th>Business</th><th>Solution</th><th>Overall</th>';
+        heatmapHTML += '</tr></thead><tbody>';
 
-        viewStories.filter(story => !story.isEnabler && !story.isChangeRequest).forEach(story => {
+        processedStories.forEach(story => {
             const adoUrl = 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + story.id;
             heatmapHTML += '<tr>';
             heatmapHTML += '<td class="story-id"><a href="' + adoUrl + '" target="_blank">' + story.id + '</a></td>';
             heatmapHTML += '<td class="story-title">' + story.title + '</td>';
-            const sol = solutioningDisplay(story.solutioningStatus);
-            heatmapHTML += '<td style="color:#1a1a1a;">' + sol.emoji + ' ' + sol.label + '</td>';
             heatmapHTML += '<td class="' + getStatusClass(story.uxStatus) + '">' + story.uxStatus + '</td>';
             heatmapHTML += '<td class="' + getStatusClass(story.dataStatus) + '">' + story.dataStatus + '</td>';
             heatmapHTML += '<td class="' + getStatusClass(story.businessStatus) + '">' + story.businessStatus + '</td>';
@@ -1252,7 +1073,7 @@
         detailedHTML += '<th class="sortable" onclick="sortTable(7)">Overall Status</th>';
         detailedHTML += '</tr></thead><tbody id="detailed-tbody">';
 
-        viewStories.forEach(story => {
+        processedStories.forEach(story => {
             const adoUrl = 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + story.id;
             const parentUrl = story.parent ? 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + story.parent : '';
             detailedHTML += '<tr>';
@@ -1274,161 +1095,8 @@
         detailedHTML += '</tbody>';
         document.getElementById('detailed-table').innerHTML = detailedHTML;
 
-        // Render Enablers Table
-        const enablerStories = viewStories.filter(story => story.isEnabler);
-        let enablersHTML = '<thead><tr>';
-        enablersHTML += '<th>Story ID</th><th>Parent</th><th>Title</th>';
-        enablersHTML += '</tr></thead><tbody>';
-
-        if (enablerStories.length === 0) {
-            enablersHTML += '<tr><td colspan="3" style="text-align:center; color:#999;">No enablers in this sprint.</td></tr>';
-        } else {
-            enablerStories.forEach(story => {
-                const adoUrl = 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + story.id;
-                const parentUrl = story.parent ? 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + story.parent : '';
-                enablersHTML += '<tr>';
-                enablersHTML += '<td class="story-id"><a href="' + adoUrl + '" target="_blank">' + story.id + '</a></td>';
-                if (story.parent && story.parentName) {
-                    enablersHTML += '<td><a href="' + parentUrl + '" target="_blank" style="color: var(--rc-gray); text-decoration: none;" title="Parent ID: ' + story.parent + '">' + story.parentName + '</a></td>';
-                } else {
-                    enablersHTML += '<td style="color: #999;">-</td>';
-                }
-                enablersHTML += '<td class="story-title">' + story.title + '</td>';
-                enablersHTML += '</tr>';
-            });
-        }
-
-        enablersHTML += '</tbody>';
-        document.getElementById('enablers-table').innerHTML = enablersHTML;
-
-        // Render Change Requests Table
-        const changeRequestStories = viewStories.filter(story => story.isChangeRequest);
-        let crHTML = '<thead><tr>';
-        crHTML += '<th>Story ID</th><th>Parent</th><th>Title</th><th>Solutioning Status</th><th>UX</th><th>Data</th><th>Business</th><th>Solution</th><th>Overall</th>';
-        crHTML += '</tr></thead><tbody>';
-
-        if (changeRequestStories.length === 0) {
-            crHTML += '<tr><td colspan="9" style="text-align:center; color:#999;">No change requests in this sprint.</td></tr>';
-        } else {
-            changeRequestStories.forEach(story => {
-                const adoUrl = 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + story.id;
-                const parentUrl = story.parent ? 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + story.parent : '';
-                crHTML += '<tr>';
-                crHTML += '<td class="story-id"><a href="' + adoUrl + '" target="_blank">' + story.id + '</a></td>';
-                if (story.parent && story.parentName) {
-                    crHTML += '<td><a href="' + parentUrl + '" target="_blank" style="color: var(--rc-gray); text-decoration: none;" title="Parent ID: ' + story.parent + '">' + story.parentName + '</a></td>';
-                } else {
-                    crHTML += '<td style="color: #999;">-</td>';
-                }
-                crHTML += '<td class="story-title">' + story.title + '</td>';
-                const crSol = solutioningDisplay(story.solutioningStatus);
-                crHTML += '<td style="color:#1a1a1a;">' + crSol.emoji + ' ' + crSol.label + '</td>';
-                crHTML += '<td class="' + getStatusClass(story.uxStatus) + '">' + story.uxStatus + '</td>';
-                crHTML += '<td class="' + getStatusClass(story.dataStatus) + '">' + story.dataStatus + '</td>';
-                crHTML += '<td class="' + getStatusClass(story.businessStatus) + '">' + story.businessStatus + '</td>';
-                crHTML += '<td class="' + getStatusClass(story.solutionStatus) + '">' + story.solutionStatus + '</td>';
-                crHTML += '<td><span class="readiness-' + (story.readiness === 'Ready' ? 'ready' : 'not-ready') + '">' + story.readiness + '</span></td>';
-                crHTML += '</tr>';
-            });
-        }
-
-        crHTML += '</tbody>';
-        document.getElementById('change-requests-table').innerHTML = crHTML;
-
-        // Render Sprint Health Checks
-        // % of Items without Story Points — all work items
-        const spScope = viewStories;
-        const spMissing = spScope.filter(s => !s.hasStoryPoints);
-        const spPct = spScope.length > 0 ? ((spMissing.length / spScope.length) * 100).toFixed(1) : "0.0";
-
-        // % of Items without a Parent — include all work items
-        const parentScope = viewStories;
-        const parentMissing = parentScope.filter(s => !s.parent);
-        const parentPct = parentScope.length > 0 ? ((parentMissing.length / parentScope.length) * 100).toFixed(1) : "0.0";
-
-        const healthClass = (pct) => { const p = parseFloat(pct); return p === 0 ? 'excellent' : p <= 20 ? 'warning' : 'danger'; };
-
-        let healthHTML = '';
-        healthHTML += '<div class="kpi-card health-tile ' + healthClass(spPct) + '" id="health-tile-sp" onclick="toggleHealthDrill(\'sp\')">';
-        healthHTML += '<div class="kpi-label">Items without Story Points</div>';
-        healthHTML += '<div class="kpi-value">' + spPct + '%</div>';
-        healthHTML += '<div class="kpi-subtitle">' + spMissing.length + ' of ' + spScope.length + ' items &nbsp;·&nbsp; <span class="drill-hint">click to view ▸</span></div>';
-        healthHTML += '</div>';
-
-        healthHTML += '<div class="kpi-card health-tile ' + healthClass(parentPct) + '" id="health-tile-parent" onclick="toggleHealthDrill(\'parent\')">';
-        healthHTML += '<div class="kpi-label">Items without a Parent</div>';
-        healthHTML += '<div class="kpi-value">' + parentPct + '%</div>';
-        healthHTML += '<div class="kpi-subtitle">' + parentMissing.length + ' of ' + parentScope.length + ' items &nbsp;·&nbsp; <span class="drill-hint">click to view ▸</span></div>';
-        healthHTML += '</div>';
-
-        document.getElementById('health-kpi-grid').innerHTML = healthHTML;
-
-        // Stash the matching item sets for the drill-down
-        healthDrillData = {
-            sp: { title: 'Items without Story Points', items: spMissing },
-            parent: { title: 'Items without a Parent', items: parentMissing }
-        };
-        // Re-render an open drill-down so it stays in sync with the current view
-        if (activeHealthDrill) renderHealthDrill(activeHealthDrill);
-
         // Apply default sort by Parent
         applyDefaultSort();
-        } // end renderDashboard
-
-        // ---- Sprint Health Checks drill-down ----
-        let healthDrillData = { sp: {title:'', items:[]}, parent: {title:'', items:[]} };
-        let activeHealthDrill = null;
-
-        function renderHealthDrill(key) {
-            const data = healthDrillData[key];
-            const container = document.getElementById('health-drilldown');
-            document.getElementById('health-tile-sp').classList.toggle('selected', key === 'sp');
-            document.getElementById('health-tile-parent').classList.toggle('selected', key === 'parent');
-
-            let html = '<div class="health-drill">';
-            html += '<h3>' + data.title + ' <span style="color:var(--rc-muted); font-weight:400;">(' + data.items.length + ')</span></h3>';
-            html += '<div style="overflow-x:auto;"><table><thead><tr>';
-            html += '<th>Story ID</th><th>Title</th><th>Solutioning Status</th>';
-            html += '</tr></thead><tbody>';
-            if (data.items.length === 0) {
-                html += '<tr><td colspan="3" style="text-align:center; color:#999;">No items — this check passes for the current view. 🎉</td></tr>';
-            } else {
-                data.items.forEach(s => {
-                    const adoUrl = 'https://dev.azure.com/MarsDevTeam/EOS/_workitems/edit/' + s.id;
-                    const sol = solutioningDisplay(s.solutioningStatus);
-                    html += '<tr>';
-                    html += '<td class="story-id"><a href="' + adoUrl + '" target="_blank">' + s.id + '</a></td>';
-                    html += '<td class="story-title">' + s.title + '</td>';
-                    html += '<td style="color:#1a1a1a;">' + sol.emoji + ' ' + sol.label + '</td>';
-                    html += '</tr>';
-                });
-            }
-            html += '</tbody></table></div></div>';
-            container.innerHTML = html;
-        }
-
-        function toggleHealthDrill(key) {
-            if (activeHealthDrill === key) {
-                activeHealthDrill = null;
-                document.getElementById('health-drilldown').innerHTML = '';
-                document.getElementById('health-tile-sp').classList.remove('selected');
-                document.getElementById('health-tile-parent').classList.remove('selected');
-            } else {
-                activeHealthDrill = key;
-                renderHealthDrill(key);
-            }
-        }
-
-        // Workstream view switcher
-        function switchView(view) {
-            document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById('view-' + view);
-            if (activeBtn) activeBtn.classList.add('active');
-            renderDashboard(view);
-        }
-
-        // Initial render (default: OM + eB2B)
-        renderDashboard('ALL');
 
         // Filter functionality
         function filterTable() {
@@ -1439,8 +1107,8 @@
 
             for (let row of rows) {
                 const id = row.cells[0].textContent.toLowerCase();
-                const title = row.cells[2].textContent.toLowerCase();
-                const status = row.cells[7].textContent;
+                const title = row.cells[1].textContent.toLowerCase();
+                const status = row.cells[11].textContent;
 
                 const matchesSearch = id.includes(searchTerm) || title.includes(searchTerm);
                 const matchesStatus = !statusFilter || status.includes(statusFilter);
@@ -1465,11 +1133,21 @@
             document.getElementById(tab).classList.add('active');
         }
 
-        function toggleLegend() {
-            const panel = document.getElementById('legend-panel');
-            const toggle = document.getElementById('legend-toggle');
-            const expanded = panel.classList.toggle('expanded');
-            toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        function toggleHiddenStories() {
+            const hiddenStories = document.getElementById('hidden-stories');
+            const toggleButton = document.getElementById('expand-toggle');
+            const storiesNeedingAttention = processedStories.filter(s => s.readiness === "Not Ready");
+            const hiddenCount = storiesNeedingAttention.length - 5;
+
+            if (hiddenStories.classList.contains('expanded')) {
+                // Collapse
+                hiddenStories.classList.remove('expanded');
+                toggleButton.textContent = '... and ' + hiddenCount + ' more stories (click to expand)';
+            } else {
+                // Expand
+                hiddenStories.classList.add('expanded');
+                toggleButton.textContent = '▲ Show less';
+            }
         }
 
         // Table sorting functionality
@@ -1533,59 +1211,6 @@
             }
         }
 
-        // Heatmap table sorting (independent of the detailed table)
-        let heatmapSortDirection = {};
-        let heatmapSortColumn = null;
-
-        function sortHeatmap(columnIndex) {
-            const table = document.getElementById('heatmap-table');
-            const tbody = document.getElementById('heatmap-tbody');
-            if (!tbody) return;
-            const rows = Array.from(tbody.getElementsByTagName('tr'));
-
-            if (heatmapSortColumn !== columnIndex) {
-                heatmapSortDirection[columnIndex] = 'asc';
-            } else {
-                heatmapSortDirection[columnIndex] = heatmapSortDirection[columnIndex] === 'asc' ? 'desc' : 'asc';
-            }
-            heatmapSortColumn = columnIndex;
-            const direction = heatmapSortDirection[columnIndex];
-
-            // Solutioning Status (col 2) sorts by maturity: In Progress < Under Finalisation < Finalised
-            // Rank by the text label, ignoring the leading emoji.
-            const solRankOf = (text) => {
-                const t = text.toLowerCase();
-                if (t.includes('in progress')) return 0;
-                if (t.includes('under finalisation')) return 1;
-                if (t.includes('finalised')) return 2;
-                return 99;
-            };
-
-            rows.sort((a, b) => {
-                let cellA = a.cells[columnIndex].textContent.trim();
-                let cellB = b.cells[columnIndex].textContent.trim();
-
-                if (columnIndex === 0) {
-                    const numA = parseInt(cellA) || 0;
-                    const numB = parseInt(cellB) || 0;
-                    return direction === 'asc' ? numA - numB : numB - numA;
-                }
-                if (columnIndex === 2) {
-                    const rA = solRankOf(cellA);
-                    const rB = solRankOf(cellB);
-                    return direction === 'asc' ? rA - rB : rB - rA;
-                }
-                return direction === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-            });
-
-            tbody.innerHTML = '';
-            rows.forEach(row => tbody.appendChild(row));
-
-            table.querySelectorAll('th.sortable').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-            const activeHeader = table.querySelectorAll('th.sortable')[columnIndex];
-            if (activeHeader) activeHeader.classList.add(direction === 'asc' ? 'sort-asc' : 'sort-desc');
-        }
-
         // Apply default sort by Parent when page loads
         function applyDefaultSort() {
             // Wait a bit for table to be rendered
@@ -1596,14 +1221,15 @@
         }
 
         console.log("Dashboard loaded successfully!");
-        console.log("Total stories (all workstreams):", processedStories.length);
-        console.log("Current view:", currentView);
+        console.log("Total stories:", totalStories);
+        console.log("Ready:", readyStories, "Not Ready:", notReadyStories);
+        console.log("Readiness:", readinessPercentage + "%");
     </script>
 
     <div class="footer">
         <div class="footer-left">
-            <h4>🎯 Sprint 21 Validation Readiness Dashboard</h4>
-            <p>Royal Canin | Release 5 - Sprint 21</p>
+            <h4>🎯 Sprint 20 Validation Readiness Dashboard</h4>
+            <p>Royal Canin | Release 5 - Sprint 20</p>
             <p>Order Management Workstream | EOS Omni-L2C</p>
         </div>
         <div class="footer-bottom">
